@@ -7,7 +7,7 @@
 }
 
 :root {
-    --magenta: #aa1c7e;
+    --magenta: #c26dbc;
     --orchid: #d781d0;
     --hot-pink: #dc63ae;
     --bubblegum: #ff9ad8;
@@ -146,7 +146,7 @@ body {
 }
 
 .btn-primary {
-    background: var(--magenta);
+    background: var(--purple);
     color: #fff;
 }
 
@@ -226,9 +226,9 @@ input:focus {
 }
 
 .choice-card.selected {
-    border-color: var(--magenta);
+    border-color: var(--purple);
     background: #fff5fd;
-    color: var(--magenta);
+    color: var(--purple);
     font-weight: 600;
 }
 
@@ -322,7 +322,7 @@ input:focus {
 
 #s-role .welcome-msg a {
     color: var(--magenta);
-    text-decoration: none;
+    text-decoration: underline;
 }
 
 .role-card {

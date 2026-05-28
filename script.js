@@ -176,13 +176,29 @@ function stopTimer() {
 function fmt(s) { return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
 
 // ── S1 ──
+function checkRole() {
+  if (role && terms) {
+    if (role !== 'student') { alert('This prototype covers the Student flow only.'); return; }
+    document.getElementById('terms-err').style.display = 'none';
+    go('s-signup');
+  }
+}
 function pickRole(r) {
   role = r;
   document.querySelectorAll('.role-card').forEach(function (c) { c.classList.remove('selected'); });
   document.getElementById('rc-' + r).classList.add('selected');
   if (r === 'student' && !t0) startTimer();
+  checkRole();
 }
-function onTerms() { terms = document.getElementById('terms-cb').checked; }
+function onTerms() {
+  terms = document.getElementById('terms-cb').checked;
+  if (role && !terms) {
+    document.getElementById('terms-err').style.display = 'block';
+  } else {
+    document.getElementById('terms-err').style.display = 'none';
+  }
+  checkRole();
+}
 function fromRole() {
   if (!role) { alert('Please select a profile type.'); return; }
   if (!terms) { document.getElementById('terms-err').style.display = 'block'; return; }
