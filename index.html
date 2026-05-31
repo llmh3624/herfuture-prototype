@@ -21,7 +21,7 @@
     <div id="s-role" class="screen active">
       <div class="inner">
         <div style="text-align:center;padding:8px 0 4px;">
-          <div class="logo"><span>her</span>future.</div>
+          <div class="logo"><span>her</span>future<span>.</span></div>
         </div>
         <p class="welcome-msg">Welcome! Create a new profile or <a href="#">sign in here</a></p>
         <div class="role-card" id="rc-student" onclick="pickRole('student')">
@@ -38,13 +38,14 @@
             <p>For women in the workforce to connect, join events, and share expertise.</p>
           </div>
         </div>
+        <div class="err" id="terms-err">Please accept the Terms of Use below.</div>
         <label class="terms-row">
           <input type="checkbox" id="terms-cb" onchange="onTerms()">
           <span>By signing up, I accept the <a href="#">Terms of Use</a>.</span>
         </label>
-        <div class="err" id="terms-err">Please accept the Terms of Use below.</div>
       </div>
       <div class="sticky" style="margin-top:auto;">
+        <hr style="border: 1px solid var(--border);">
         <div class="footer-link">
           <div>Already have an account?</div>
           <div style="margin-top: 6px;">
@@ -76,18 +77,22 @@
           Google Sign Up
         </button>
         <div class="divider">or</div>
-        <div class="field"><input type="email" id="email-f" placeholder="Email"></div>
+       <div class="field"><input type="email" id="email-f" placeholder="Email" oninput="chkPwd()"></div>
         <div class="name-row">
-          <div class="field"><input type="text" id="fn-f" placeholder="First Name"></div>
-          <div class="field"><input type="text" id="ln-f" placeholder="Last Name"></div>
+          <div class="field"><input type="text" id="fn-f" placeholder="First Name" oninput="chkPwd()"></div>
+          <div class="field"><input type="text" id="ln-f" placeholder="Last Name" oninput="chkPwd()"></div>
         </div>
         <div class="field pwd-wrap">
           <input type="password" id="pw-f" placeholder="Password" oninput="chkPwd()">
-          <button class="eye-btn" onclick="togPwd('pw-f',this)">👁</button>
+          <button class="eye-btn" onclick="togPwd('pw-f',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </button>
         </div>
         <div class="field pwd-wrap">
           <input type="password" id="pc-f" placeholder="Confirm Password" oninput="chkPwd()">
-          <button class="eye-btn" onclick="togPwd('pc-f',this)">👁</button>
+          <button class="eye-btn" onclick="togPwd('pc-f',this)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </button>
         </div>
         <div class="rules">
           <div class="rule" id="r-len">
@@ -113,6 +118,7 @@
       <div class="sticky">
         <button class="btn btn-primary" id="signup-btn" onclick="fromSignup()" disabled>Create Account</button>
         <div class="footer-link">
+          <hr style="border: 1px solid var(--border); margin-bottom:12px;">
           <div>Already have an account?</div>
           <div style="margin-top: 6px;">
             <a href="#">Sign In</a> &nbsp; &nbsp; <a href="#">Need help?</a>
@@ -127,7 +133,7 @@
       <div class="verify-chip" id="verify-email">user@example.com</div>
       <p class="verify-note">Didn't receive the code? Check your spam and promotions folders. Need help? Email
         hello@herfuture.nl.</p>
-      <p class="verify-num">Use 123456 as the code</p>
+      <p class="verify-num">Use 123456 as the code for the experiment.</p>
       <div style="width:100%;">
         <input type="text" class="code-input" id="code-f" placeholder="Verification Code" maxlength="6"
           oninput="chkCode(this)" inputmode="numeric">
@@ -335,7 +341,7 @@
         <div class="edu-title">🎓 <span id="edu-name">there</span>, <span id="edu-q">what do you study?</span></div>
         <div class="field"><input type="text" id="study-f" placeholder="Study" oninput="chkEdu()"></div>
         <div class="field select-wrap">
-          <select class="custom-select" id="uni-sel" style="border-radius:12px;" onchange="chkEdu()">
+          <select class="custom-select" id="uni-sel" onchange="chkEdu()">
             <option value="">University</option>
             <optgroup label="University (WO)">
               <option>Delft University of Technology</option>

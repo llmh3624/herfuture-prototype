@@ -178,27 +178,31 @@ function fmt(s) { return String(Math.floor(s / 60)).padStart(2, '0') + ':' + Str
 // ── S1 ──
 function checkRole() {
   if (role && terms) {
-    if (role !== 'student') { alert('This prototype covers the Student flow only.'); return; }
     document.getElementById('terms-err').style.display = 'none';
+    if (role !== 'student') { 
+      alert('This prototype covers the Student flow only.'); 
+      return; 
+    }
     go('s-signup');
+  } else if (role && !terms) {
+    document.getElementById('terms-err').style.display = 'block';
   }
 }
+
 function pickRole(r) {
   role = r;
   document.querySelectorAll('.role-card').forEach(function (c) { c.classList.remove('selected'); });
   document.getElementById('rc-' + r).classList.add('selected');
+  
   if (r === 'student' && !t0) startTimer();
   checkRole();
 }
+
 function onTerms() {
   terms = document.getElementById('terms-cb').checked;
-  if (role && !terms) {
-    document.getElementById('terms-err').style.display = 'block';
-  } else {
-    document.getElementById('terms-err').style.display = 'none';
-  }
   checkRole();
 }
+
 function fromRole() {
   if (!role) { alert('Please select a profile type.'); return; }
   if (!terms) { document.getElementById('terms-err').style.display = 'block'; return; }
@@ -210,12 +214,20 @@ function fromRole() {
 function togPwd(id, btn) {
   var f = document.getElementById(id);
   f.type = (f.type === 'password') ? 'text' : 'password';
-  btn.textContent = (f.type === 'password') ? '👁' : '🙈';
+  
+  var eyeIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+  var eyeOffIcon = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+
+  btn.innerHTML = (f.type === 'password') ? eyeIcon : eyeOffIcon;
 }
 
 function chkPwd() {
   var p = document.getElementById('pw-f').value;
   var c = document.getElementById('pc-f').value;
+  var email = document.getElementById('email-f').value.trim();
+  var firstName = document.getElementById('fn-f').value.trim();
+  var lastName = document.getElementById('ln-f').value.trim();
+  var emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   var rules = {
     'r-len': p.length >= 8,
@@ -230,12 +242,12 @@ function chkPwd() {
   Object.keys(rules).forEach(function (id) {
     document.getElementById(id).classList.toggle('ok', rules[id]);
     if (!rules[id]) {
-      allValid = false; // If any single rule fails, allValid becomes false
+      allValid = false;
     }
   });
 
-  // Enable the button only if all rules are satisfied
-  document.getElementById('signup-btn').disabled = !allValid;
+  var inputsValid = emailValid && firstName.length > 0 && lastName.length > 0;
+  document.getElementById('signup-btn').disabled = !(allValid && inputsValid);
 }
 
 function fromSignup() {
@@ -244,7 +256,6 @@ function fromSignup() {
   if (fn) userName = fn;
   var chip = document.getElementById('verify-email');
   chip.textContent = email || 'user@example.com';
-  // Update name in subsequent screens
   var n = userName || (isDutch ? 'daar' : 'there');
   document.getElementById('edu-name').textContent = n;
   document.getElementById('gender-title').textContent = (greet() + ', ' + tx('genderQ'));
