@@ -961,19 +961,27 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: 16px; /* Reduced padding to give the card more breathing room on small phones */
     z-index: 30;
 }
 
 .modal-card {
     background: #fff;
-    border-radius: 28px;
-    padding: 28px 22px;
+    border-radius: 24px; /* Slightly smaller radius for small screens */
+    padding: 24px 20px; /* Reduced internal padding */
     text-align: center;
     width: 100%;
     max-width: 330px;
+    max-height: 85vh; /* Prevents the card from getting cut off vertically on short phones */
+    overflow-y: auto; /* Adds an internal scrollbar if the content is taller than the phone screen */
     position: relative;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure the SVG scales smoothly on very tiny screens */
+.modal-card svg {
+    max-width: 100%;
+    height: auto;
 }
 
 .modal-close {
@@ -1271,7 +1279,7 @@ input:focus {
         border-radius: 0;
         box-shadow: none;
     }
-    
+
     #timer-pill {
         top: 54px;
     }
