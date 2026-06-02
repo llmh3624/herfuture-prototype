@@ -4,6 +4,7 @@ var career = null, careerTypes = new Set();
 var userName = '', timerInt = null, t0 = null, stopped = false;
 var isDutch = false;
 
+
 // ── TRANSLATIONS ──
 var TR = {
   en: {
@@ -179,10 +180,6 @@ function fmt(s) { return String(Math.floor(s / 60)).padStart(2, '0') + ':' + Str
 function checkRole() {
   if (role && terms) {
     document.getElementById('terms-err').style.display = 'none';
-    if (role !== 'student') { 
-      alert('This prototype covers the Student flow only.'); 
-      return; 
-    }
     go('s-signup');
   } else if (role && !terms) {
     document.getElementById('terms-err').style.display = 'block';
@@ -194,7 +191,7 @@ function pickRole(r) {
   document.querySelectorAll('.role-card').forEach(function (c) { c.classList.remove('selected'); });
   document.getElementById('rc-' + r).classList.add('selected');
   
-  if (r === 'student' && !t0) startTimer();
+  if (r === 'student' || r === 'professional') {if (!t0) startTimer();}
   checkRole();
 }
 
@@ -206,7 +203,6 @@ function onTerms() {
 function fromRole() {
   if (!role) { alert('Please select a profile type.'); return; }
   if (!terms) { document.getElementById('terms-err').style.display = 'block'; return; }
-  if (role !== 'student') { alert('This prototype covers the Student flow only.'); return; }
   go('s-signup');
 }
 
@@ -258,6 +254,7 @@ function fromSignup() {
   chip.textContent = email || 'user@example.com';
   var n = userName || (isDutch ? 'daar' : 'there');
   document.getElementById('edu-name').textContent = n;
+  document.getElementById('exp-name').textContent = n;
   document.getElementById('gender-title').textContent = (greet() + ', ' + tx('genderQ'));
   document.getElementById('lang-q-text').textContent = (greet() + ', ' + tx('langQ'));
   document.getElementById('by-title').textContent = tx('byTitle');
@@ -324,6 +321,7 @@ function toggleCareerType(t) {
 }
 
 // ── S9 ──
+// EDUCATION
 function pickDeg(btn) {
   document.querySelectorAll('.deg-pill').forEach(function (p) { p.classList.remove('selected'); });
   btn.classList.add('selected'); chkEdu();
@@ -342,6 +340,46 @@ function chkEdu() {
     document.getElementById('study-yr').value &&
     hasGrad;
   document.getElementById('edu-btn').disabled = !ok;
+}
+
+// EXPERIENCE
+function fromCareer() {
+  if (role === 'professional') {
+    go('s-experience');
+  } else {
+    go('s-education');
+  }
+}
+
+function backFromBirthyear() {
+  if (role === 'professional') {
+    go('s-experience');
+  } else {
+    go('s-education');
+  }
+}
+
+function pickExpType(btn) {
+  document.querySelectorAll('#s-experience .deg-pill').forEach(function (p) { p.classList.remove('selected'); });
+  btn.classList.add('selected'); 
+  chkExp();
+}
+
+function onStillWorking() {
+  var checked = document.getElementById('still-work-cb').checked;
+  document.getElementById('exp-end-date-section').style.display = checked ? 'none' : 'block';
+  chkExp();
+}
+
+function chkExp() {
+  var still = document.getElementById('still-work-cb').checked;
+  var hasEnd = still || (document.getElementById('exp-end-mo').value && document.getElementById('exp-end-yr').value);
+  var ok = document.getElementById('pos-f').value.trim() &&
+           document.getElementById('org-f').value.trim() &&
+           document.getElementById('exp-start-mo').value &&
+           document.getElementById('exp-start-yr').value &&
+           hasEnd;
+  document.getElementById('exp-btn').disabled = !ok;
 }
 
 // ── S10 ──

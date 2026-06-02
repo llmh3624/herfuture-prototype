@@ -309,7 +309,7 @@
         <button class="btn btn-primary" id="loc-btn" onclick="go('s-career')" disabled>Next</button>
       </div>
     </div>
-
+    
     <!-- S8: CAREER -->
     <div id="s-career" class="screen">
       <div class="top-bar" style="display:flex;align-items:center;padding:12px 24px 8px;">
@@ -331,11 +331,11 @@
           least one</p>
       </div>
       <div class="sticky">
-        <button class="btn btn-primary" id="career-btn" onclick="go('s-education')" disabled>Next</button>
+        <button class="btn btn-primary" id="career-btn" onclick="fromCareer()" disabled>Next</button>
       </div>
     </div>
 
-    <!-- S9: EDUCATION -->
+    <!-- S9_A: EDUCATION -->
     <div id="s-education" class="screen">
       <div class="top-bar" style="display:flex;align-items:center;padding:12px 24px 8px;">
         <button class="back-btn" onclick="go('s-career')">&#8592;</button>
@@ -472,10 +472,74 @@
       </div>
     </div>
 
+    <!-- S9_B: EXPERIENCE -->
+    <div id="s-experience" class="screen">
+      <div class="top-bar" style="display:flex;align-items:center;padding:12px 24px 8px;">
+        <button class="back-btn" onclick="go('s-career')">&#8592;</button>
+      </div>
+      <div class="inner" style="flex:1;overflow-y:auto;padding-bottom:16px;">
+        <div class="edu-title">💼 <span id="exp-name">there</span>, <span id="exp-q">where do you work?</span></div>
+        <div class="field"><input type="text" id="pos-f" placeholder="Position" oninput="chkExp()"></div>
+        <div class="field"><input type="text" id="org-f" placeholder="Organisation Name" oninput="chkExp()"></div>
+        
+        <div class="deg-pills" id="exp-pills">
+          <button class="deg-pill selected" onclick="pickExpType(this)">Internship</button>
+          <button class="deg-pill" onclick="pickExpType(this)">Part-time</button>
+          <button class="deg-pill" onclick="pickExpType(this)">Traineeship</button>
+          <button class="deg-pill" onclick="pickExpType(this)">Full-time</button>
+        </div>
+        
+        <div class="date-label">📅 Start date</div>
+        <div class="date-row">
+          <select class="date-sel" id="exp-start-mo" onchange="chkExp()">
+            <option value="">Month</option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <select class="date-sel" id="exp-start-yr" onchange="chkExp()">
+            <option value="">Year</option>
+            <option>2026</option><option>2025</option><option>2024</option><option>2023</option>
+            <option>2022</option><option>2021</option><option>2020</option><option>2019</option>
+            <option>2018</option><option>2017</option><option>2016</option><option>2015</option>
+          </select>
+        </div>
+        <label class="check-row">
+          <input type="checkbox" id="still-work-cb" checked onchange="onStillWorking()">
+          <span id="still-work-label">I am still working here</span>
+        </label>
+        <div id="exp-end-date-section" style="display:none;">
+          <div class="date-label">🎓 End date</div>
+          <div class="date-row">
+            <select class="date-sel" id="exp-end-mo" onchange="chkExp()">
+              <option value="">Month</option>
+              <option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option>
+            </select>
+            <select class="date-sel" id="exp-end-yr" onchange="chkExp()">
+              <option value="">Year</option>
+              <option>2026</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option><option>2020</option><option>2019</option><option>2018</option><option>2017</option><option>2016</option><option>2015</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="sticky">
+        <button class="btn btn-primary" id="exp-btn" onclick="go('s-birthyear')" disabled>Next</button>
+      </div>
+    </div>
+
     <!-- S10: BIRTH YEAR -->
     <div id="s-birthyear" class="screen">
       <div class="top-bar" style="display:flex;align-items:center;padding:12px 24px 8px;">
-        <button class="back-btn" onclick="go('s-education')">&#8592;</button>
+        <button class="back-btn" onclick="backFromBirthyear()">&#8592;</button>
       </div>
       <div class="inner">
         <h2 class="q-title" style="margin:36px 0 20px;" id="by-title">Lastly, what year were you born?</h2>
