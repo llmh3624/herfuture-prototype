@@ -955,30 +955,28 @@ input:focus {
 
 /* Screen 11 Badge */
 .modal-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(30, 10, 40, 0.5);
+    /* Changed from absolute to flex: 1 to fill the screen naturally */
+    flex: 1; 
+    width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px; /* Reduced padding to give the card more breathing room on small phones */
+    padding: 16px;
+    overflow-y: auto; /* Allows scrolling if the phone is very short */
     z-index: 30;
 }
 
 .modal-card {
     background: #fff;
-    border-radius: 24px; /* Slightly smaller radius for small screens */
-    padding: 24px 20px; /* Reduced internal padding */
+    border-radius: 24px;
+    padding: 24px 20px;
     text-align: center;
     width: 100%;
     max-width: 330px;
-    max-height: 85vh; /* Prevents the card from getting cut off vertically on short phones */
-    overflow-y: auto; /* Adds an internal scrollbar if the content is taller than the phone screen */
+    margin: auto; /* This is the magic fix! It safely centers the card without cutting it off */
     position: relative;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
-/* Ensure the SVG scales smoothly on very tiny screens */
+/* Screen 11 */
 .modal-card svg {
     max-width: 100%;
     height: auto;
