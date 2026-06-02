@@ -290,7 +290,7 @@ input:focus {
 }
 
 .sticky {
-    padding: 0 24px 28px;
+    padding: 0 24px calc(28px + env(safe-area-inset-bottom));
     background: var(--pale-blush);
     flex-shrink: 0;
 }
@@ -1266,10 +1266,12 @@ input:focus {
 
     .phone {
         width: 100%;
-        max-width: 390px; 
-        height: 100vh; 
-        max-height: 844px;
+        height: 100dvh; 
+        min-height: 100dvh;
+        border-radius: 0;
+        box-shadow: none;
     }
+    
     #timer-pill {
         top: 54px;
     }
